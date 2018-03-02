@@ -29,7 +29,7 @@ describe Value do
 
   Card = Value.new(title: String)
 
-  Rectangle = Value.new(top_left: :int, bottom_right: :int)
+  Rectangle = Value.new(top_left: Point, bottom_right: Point)
 
   Board = Value.new(cells: :array)
 
@@ -54,7 +54,7 @@ describe Value do
     end
   end
 
-  class GraphPoint < Value.new(x: :int, y: :int)
+  class GraphPoint < Value.new(x: Integer, y: Integer)
     def inspect
       "GraphPoint at #{@x},#{@y}"
     end
@@ -83,7 +83,7 @@ describe Value do
     expect { p.x = 1 }.to raise_error
   end
 
-  class Cow < Value.new(color: :string)
+  class Cow < Value.new(color: String)
     def change_color(new_color)
       @color = new_color
     end
@@ -94,7 +94,7 @@ describe Value do
     expect { c.change_color('blue') }.to raise_error
   end
 
-  Money = Value.new(amount: :int, denomination: :string)
+  Money = Value.new(amount: Integer, denomination: :maybe_string)
 
   it 'cannot be mutated using #instance_variable_set' do
     m = Money.new(1, 'USD')
@@ -120,7 +120,7 @@ describe Value do
   end
 
   describe '#hash and equality' do
-    Y = Value.new(x: :int, y: :int)
+    Y = Value.new(x: Integer, y: Integer)
 
     it 'is equal to another value with the same fields' do
       expect(Point.new(0,0)).to eq(Point.new(0,0))
@@ -154,18 +154,18 @@ describe Value do
     end
   end
 
-  ManyAttrs = Value.new(f: :int, e: :int, d: :int, c: :int, b: :int, a: :int)
+  ManyAttrs = Value.new(f: String, e: Integer, d: Integer, c: Integer, b: Integer, a: Integer)
 
   describe '#inspect' do
-    let(:v) { ManyAttrs.new(6, 5, 4, 3, 2, 1) }
+    let(:v) { ManyAttrs.new("6", 5, 4, 3, 2, 1) }
 
     it 'returns a string containing attributes in their expected order' do
-      expect(v.inspect).to eq('#<ManyAttrs f=6, e=5, d=4, c=3, b=2, a=1>')
+      expect(v.inspect).to eq('#<ManyAttrs f="6", e=5, d=4, c=3, b=2, a=1>')
     end
   end
 
   describe '#pretty_print' do
-    let(:v) { ManyAttrs.new(6, 5, 4, 3, 2, 1) }
+    let(:v) { ManyAttrs.new("6", 5, 4, 3, 2, 1) }
 
     it 'returns string with breaks after every value if any value is long' do
       expect(v.with(:f => 'a' * 70).pretty_inspect).to eq("#<ManyAttrs\n f=\"#{'a' * 70}\",\n e=5,\n d=4,\n c=3,\n b=2,\n a=1>\n")
