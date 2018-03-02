@@ -1,10 +1,10 @@
 # Values
 
-[![Gem Version](https://img.shields.io/gem/v/values.svg)](https://rubygems.org/gems/values/)
-[![Gem Downloads](https://img.shields.io/gem/dt/values.svg)](https://rubygems.org/gems/values/)
-[![CI Build Status](https://img.shields.io/travis/tcrayford/Values.svg)](https://travis-ci.org/tcrayford/Values)
-[![Code Coverage](https://img.shields.io/codecov/c/github/tcrayford/Values.svg)](https://codecov.io/github/tcrayford/Values)
-[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://rubydoc.info/github/tcrayford/Values/master/frames)
+<!-- [![Gem Version](https://img.shields.io/gem/v/values.svg)](https://rubygems.org/gems/values/) -->
+<!-- [![Gem Downloads](https://img.shields.io/gem/dt/values.svg)](https://rubygems.org/gems/values/) -->
+[![CI Build Status](https://img.shields.io/travis/avh4/immutable-typed-values.svg)](https://travis-ci.org/avh4/immutable-typed-values)
+<!-- [![Code Coverage](https://img.shields.io/codecov/c/github/tcrayford/Values.svg)](https://codecov.io/github/tcrayford/Values) -->
+<!-- [![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://rubydoc.info/github/tcrayford/Values/master/frames) -->
 
 ## Summary
 
@@ -114,3 +114,13 @@ p.to_s
 ```
 
 Values does NOT have all the features of Struct or OpenStruct (nor is it meant to).
+
+
+## Development info
+
+```sh
+bundle  # first time setup
+bundle exec rake  # run tests
+bundle exec rdoc  # build documentation
+bundle exec gem build immutable-typed-values.gemspec  # validate the gem
+```
