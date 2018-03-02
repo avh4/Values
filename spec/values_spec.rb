@@ -50,7 +50,7 @@ describe Value do
 
     it 'raises argument error if not given arguments of the right type' do
       expect { Point.new("0", 1) }.to raise_error(ArgumentError, 'wrong type for field x: expected Integer, but was String')
-      expect { Card.new(9) }.to raise_error(ArgumentError, 'wrong type for field title: expected String, but was Fixnum')
+      expect { Card.new(9) }.to raise_error(ArgumentError, "wrong type for field title: expected String, but was #{9.class}")
     end
   end
 
