@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.summary     = "Typed, immutable value objects for ruby"
   gem.licenses    = ["MIT"]
 
-  gem.required_ruby_version = ">= 1.8.7"
+  gem.required_ruby_version = ">= 1.9.0"
   gem.add_development_dependency "rspec", "~> 2.11.0"
 
   gem.files         = `git ls-files`.split("\n")
