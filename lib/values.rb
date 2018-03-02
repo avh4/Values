@@ -30,7 +30,15 @@ class Value
       # happens once per class, instead of happening once per instance of the
       # class.
       instance_var_assignments = Array.new(fields.length) do |idx|
-        "@#{fields[idx]} = values[#{idx}]"
+        [
+          case field_types[fields[idx]]
+          when Class
+            "raise ArgumentError.new(\"wrong type for field #{fields[idx]}: expected \#{self.class::VALUE_TYPES[self.class::VALUE_ATTRS[#{idx}]]}, but was \#{values[#{idx}].class}\") unless values[#{idx}].is_a?(self.class::VALUE_TYPES[self.class::VALUE_ATTRS[#{idx}]])"
+          else
+            ""
+          end,
+          "@#{fields[idx]} = values[#{idx}]",
+        ].join("\n")
       end.join("\n")
 
       class_eval <<-RUBY
@@ -48,6 +56,7 @@ class Value
       RUBY
 
       const_set :VALUE_ATTRS, fields
+      const_set :VALUE_TYPES, field_types
 
       def self.with(hash)
         unexpected_keys = hash.keys - self::VALUE_ATTRS

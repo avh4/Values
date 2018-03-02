@@ -24,7 +24,10 @@ describe Value do
 
   Cell = Value.new(alive: :bool)
 
-  Point = Value.new(x: :float, y: :float)
+  Point = Value.new(x: Integer, y: Integer)
+  PointSet = Value.new(x: :set, y: :set)
+
+  Card = Value.new(title: String)
 
   Rectangle = Value.new(top_left: :int, bottom_right: :int)
 
@@ -43,6 +46,11 @@ describe Value do
 
     it 'raises argument errors if not given the right number of arguments' do
       expect { Point.new }.to raise_error(ArgumentError, 'wrong number of arguments, 0 for 2')
+    end
+
+    it 'raises argument error if not given arguments of the right type' do
+      expect { Point.new("0", 1) }.to raise_error(ArgumentError, 'wrong type for field x: expected Integer, but was String')
+      expect { Card.new(9) }.to raise_error(ArgumentError, 'wrong type for field title: expected String, but was Fixnum')
     end
   end
 
@@ -174,7 +182,7 @@ describe Value do
 
   describe '#with' do
     let(:p) { Point.new(1, -1) }
-    let(:b) { Point.new(Set.new([1, 2, 3]), Set.new([4, 5, 6])) }
+    let(:b) { PointSet.new(Set.new([1, 2, 3]), Set.new([4, 5, 6])) }
 
     describe 'with no arguments' do
       it 'returns an object equal by value' do
@@ -192,7 +200,7 @@ describe Value do
       end
 
       it 'handles nested args' do
-        expect( b.with({:x => Set.new([1])})).to eq(Point.new(Set.new([1]), b.y))
+        expect( b.with({:x => Set.new([1])})).to eq(PointSet.new(Set.new([1]), b.y))
       end
 
       it 'defaults to current values if missing' do
