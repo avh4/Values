@@ -22,13 +22,13 @@ describe Value do
     end
   end
 
-  Cell = Value.new(:alive)
+  Cell = Value.new(alive: :bool)
 
-  Point = Value.new(:x, :y)
+  Point = Value.new(x: :float, y: :float)
 
-  Rectangle = Value.new(:top_left, :bottom_right)
+  Rectangle = Value.new(top_left: :int, bottom_right: :int)
 
-  Board = Value.new(:cells)
+  Board = Value.new(cells: :array)
 
   describe '.new and the fields of a value class' do
     it 'stores a single field' do
@@ -46,7 +46,7 @@ describe Value do
     end
   end
 
-  class GraphPoint < Value.new(:x, :y)
+  class GraphPoint < Value.new(x: :int, y: :int)
     def inspect
       "GraphPoint at #{@x},#{@y}"
     end
@@ -60,7 +60,7 @@ describe Value do
     expect(Point.new(0, 1).inspect).to eq('#<Point x=0, y=1>')
   end
 
-  Line = Value.new(:slope, :y_intercept) do
+  Line = Value.new(slope: :float, y_intercept: :float) do
     def inspect
       "<Line: y=#{slope}x+#{y_intercept}>"
     end
@@ -75,7 +75,7 @@ describe Value do
     expect { p.x = 1 }.to raise_error
   end
 
-  class Cow < Value.new(:color)
+  class Cow < Value.new(color: :string)
     def change_color(new_color)
       @color = new_color
     end
@@ -86,7 +86,7 @@ describe Value do
     expect { c.change_color('blue') }.to raise_error
   end
 
-  Money = Value.new(:amount, :denomination)
+  Money = Value.new(amount: :int, denomination: :string)
 
   it 'cannot be mutated using #instance_variable_set' do
     m = Money.new(1, 'USD')
@@ -112,7 +112,7 @@ describe Value do
   end
 
   describe '#hash and equality' do
-    Y = Value.new(:x, :y)
+    Y = Value.new(x: :int, y: :int)
 
     it 'is equal to another value with the same fields' do
       expect(Point.new(0,0)).to eq(Point.new(0,0))
@@ -146,7 +146,7 @@ describe Value do
     end
   end
 
-  ManyAttrs = Value.new(:f, :e, :d, :c, :b, :a)
+  ManyAttrs = Value.new(f: :int, e: :int, d: :int, c: :int, b: :int, a: :int)
 
   describe '#inspect' do
     let(:v) { ManyAttrs.new(6, 5, 4, 3, 2, 1) }

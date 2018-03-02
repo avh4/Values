@@ -55,7 +55,7 @@ Values fixes both of the above problems.
 Constructors require expected arguments:
 
 ```ruby
-Point = Value.new(:x, :y)
+Point = Value.new(x: :int, y: :int)
 Point.new(1)
 # => ArgumentError: wrong number of arguments, 1 for 2
 # from /Users/tcrayford/Projects/ruby/values/lib/values.rb:7:in `block (2 levels) in new
@@ -102,7 +102,7 @@ Point.with(x: 1, y: -1).to_h
 Values also supports customization of value classes inheriting from `Value.new`:
 
 ```ruby
-class Point < Value.new(:x, :y)
+class Point < Value.new(x: :int, y: :int)
   def to_s
     "<Point at (#{x}, #{y})>"
   end

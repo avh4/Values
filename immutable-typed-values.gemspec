@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors     = ["Aaron VonderHaar", "Tom Crayford", "Marc Siegel"]
   gem.email       = ["gruen0aermel@gmail.com"]
   gem.homepage    = "http://github.com/avh4/immutable-typed-values"
-  gem.description = "Typed, immutable value objects for ruby.\n\n    Make a new value class: Point = Value.new(:x, :y)\n    And use it:\n    p = Point.new(1,0)\n    p.x\n    => 1\n    p.y\n    => 0\n    "
+  gem.description = "Typed, immutable value objects for ruby.\n\n    Make a new value class: Point = Value.new(x: :int, y: :int)\n    And use it:\n    p = Point.new(1,0)\n    p.x\n    => 1\n    p.y\n    => 0\n    "
   gem.summary     = "Typed, immutable value objects for ruby"
   gem.licenses    = ["MIT"]
 
