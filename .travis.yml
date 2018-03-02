@@ -16,7 +16,6 @@ rvm:
   - 2.0
   - 1.9.2 # allowed to fail until Travis binary for this is fixed
   - 1.9.3
-  - ree
   # JRuby
   - jruby-head
   - jruby-9.1
