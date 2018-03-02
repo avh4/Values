@@ -30,15 +30,26 @@ class Value
       # happens once per class, instead of happening once per instance of the
       # class.
       instance_var_assignments = Array.new(fields.length) do |idx|
-        [
-          case field_types[fields[idx]]
-          when Class
-            "raise ArgumentError.new(\"wrong type for field #{fields[idx]}: expected \#{self.class::VALUE_TYPES[self.class::VALUE_ATTRS[#{idx}]]}, but was \#{values[#{idx}].class}\") unless values[#{idx}].is_a?(self.class::VALUE_TYPES[self.class::VALUE_ATTRS[#{idx}]])"
-          else
-            ""
-          end,
-          "@#{fields[idx]} = values[#{idx}]",
-        ].join("\n")
+        field_name = fields[idx]
+        case field_types[fields[idx]]
+        when Class
+          <<-RUBY
+            begin
+              value = values[#{idx}]
+              field_name =
+              field_class = self.class::VALUE_TYPES[self.class::VALUE_ATTRS[#{idx}]]
+              if value.is_a?(field_class)
+                @#{field_name} = value
+              elsif value.is_a?(Hash)
+                @#{field_name} = field_class.with(value)
+              else
+                raise ArgumentError.new(\"wrong type for field #{field_name}: expected \#{field_class}, but was \#{value.class}\")
+              end
+            end
+          RUBY
+        else
+          "@#{field_name} = values[#{idx}]"
+        end
       end.join("\n")
 
       class_eval <<-RUBY

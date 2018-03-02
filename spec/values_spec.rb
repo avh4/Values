@@ -211,6 +211,14 @@ describe Value do
         expect { p.with({ :foo => 3 }) }.to raise_error(ArgumentError)
       end
     end
+
+    Score = Value.new(earned: Integer, total: Integer)
+    Assignment = Value.new(id: Integer, score: Score)
+
+    it 'can create nested fields from hashes' do
+      a = Assignment.with(id: 1, score: { earned: 9, total: 10 })
+      expect(a.score.earned).to eq(9)
+    end
   end
 
   describe '#to_h' do
